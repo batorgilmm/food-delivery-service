@@ -12,8 +12,16 @@ app.use(express.json());
 
 const PORT = 8000;
 
-app.use("/api/v1/food", foodRouter);
-app.use("/api/v1/category", categoryRouter);
+app.use("/api/v1/foods", foodRouter);
+app.use("/api/v1/categories", categoryRouter);
+
+let count = 0;
+
+app.get("/", (req, res) => {
+  console.log(req, count++);
+
+  res.send("ok");
+});
 
 app.listen(PORT, async () => {
   await connection();
