@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { foodRouter } from "./routes/food";
 import { connection } from "./utils/connection";
 import { categoryRouter } from "./routes/category";
+import { authRouter } from "./routes/auth";
 
 dotenv.config();
 
@@ -14,12 +15,9 @@ const PORT = 8000;
 
 app.use("/api/v1/foods", foodRouter);
 app.use("/api/v1/categories", categoryRouter);
+app.use("/api/v1/auth", authRouter);
 
-let count = 0;
-
-app.get("/", (req, res) => {
-  console.log(req, count++);
-
+app.get("/", (_req, res) => {
   res.send("ok");
 });
 
