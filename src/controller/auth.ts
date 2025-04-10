@@ -1,11 +1,15 @@
 import { User } from "../schema/User";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const SALT_ROUND = 12;
 
 export const register = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { password } = req.body;
+
+    console.log(req.body);
+
     const salt = bcrypt.genSaltSync(SALT_ROUND);
 
     const hash = bcrypt.hashSync(password, salt);
@@ -14,6 +18,7 @@ export const register = async (req, res) => {
 
     res.json({ success: true, user });
   } catch (error) {
+    console.log(error);
     if (error.code == 11000) {
       res.status(400).json({ success: false, error: "User exist" });
       return;
@@ -42,5 +47,9 @@ export const login = async (req, res) => {
     return;
   }
 
-  res.status(200).json({ success: true, user });
+  const token = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET_KEY, {
+    expiresIn: "1h",
+  });
+
+  res.status(200).json({ success: true, token });
 };

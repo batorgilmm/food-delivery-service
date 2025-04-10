@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import { foodRouter } from "./routes/food";
 import { connection } from "./utils/connection";
 import { categoryRouter } from "./routes/category";
@@ -10,6 +11,8 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
+
+app.use(cors());
 
 const PORT = 8000;
 

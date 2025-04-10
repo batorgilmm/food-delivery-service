@@ -1,10 +1,16 @@
 import express from "express";
-import { createCategory, getCategoriesWithFoods } from "../controller/category";
+import {
+  createCategory,
+  getCategories,
+  getCategoriesWithFoods,
+} from "../controller/category";
+import { checkToken } from "../middleware/check-token";
 
 const categoryRouter = express.Router();
 
 categoryRouter
-  .post("/", createCategory)
+  .post("/", checkToken, createCategory)
+  .get("/", getCategories)
   .get("/with-foods", getCategoriesWithFoods);
 
 export { categoryRouter };
